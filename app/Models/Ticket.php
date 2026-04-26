@@ -31,7 +31,6 @@ class Ticket extends Model implements HasMedia
         $this->addMediaCollection('attachments');
     }
 
-
     protected $casts = [
         'status' => TicketStatus::class
     ];
