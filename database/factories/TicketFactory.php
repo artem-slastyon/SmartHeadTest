@@ -20,7 +20,8 @@ class TicketFactory extends Factory
         return [
             'subject' => fake()->text(),
             'text' => fake()->text(300),
-            'status' => fake()->numberBetween(0, 2)
+            'status' => fake()->numberBetween(0, 2),
+            'created_at' => fake()->dateTimeThisYear(),
         ];
     }
 }
