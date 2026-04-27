@@ -74,7 +74,6 @@
             <td>{{ $ticket->customer->phone }}</td>
             <td>{{ $ticket->subject }}</td>
             <td><x-status-badge :status="$ticket->status"/></td>
-            <td>{{ $ticket->created_at }}</td>
             <td>{{ $ticket->response_at }}</td>
         </tr>
     @endforeach

@@ -7,6 +7,8 @@ use App\Http\Requests\TicketsRequest;
 use App\Models\Ticket;
 use DateTime;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class TicketsController extends Controller
 {
@@ -77,8 +79,26 @@ class TicketsController extends Controller
         );
     }
 
-    public function show()
+    public function show(Ticket $ticket)
     {
+        return view(
+            'pages.tickets.show',
+            [
+                'ticket' => $ticket
+            ]
+        );
+    }
 
+    public function update(Ticket $ticket, Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'status' => 'int|between:0,2'
+        ]);
+
+        $ticket->update($data);
+
+        return response()
+            ->redirectToRoute('tickets.show', $ticket)
+            ->with('status', 'Ticket status successfully updated!');
     }
 }

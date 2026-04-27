@@ -68,4 +68,8 @@ class Ticket extends Model implements HasMedia
         'status' => TicketStatus::class,
         'response_at' => 'datetime'
     ];
+
+    protected $fillable = [
+        'status'
+    ];
 }
