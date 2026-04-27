@@ -24,7 +24,6 @@ class TicketsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tab' => 'string|in:tickets,users|nullable',
             'email' => 'string|nullable',
             'phone' => 'string|nullable',
             'status' => 'integer|between:-1,2|nullable',

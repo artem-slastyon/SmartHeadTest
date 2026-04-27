@@ -21,7 +21,7 @@ class TicketsController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show tickets list.
      *
      * @return Renderable
      */
@@ -65,7 +65,7 @@ class TicketsController extends Controller
         }
 
         return view(
-            'dashboard',
+            'pages.tickets.index',
             [
                 'email' => $data['email'] ?? '',
                 'phone' => $data['phone'] ?? '',
