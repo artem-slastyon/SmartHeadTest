@@ -11,9 +11,9 @@ enum TicketStatus: int
     public function color(): string
     {
         return match ($this) {
-            self::NEW => 'cyan',
-            self::IN_PROGRESS => 'orange',
-            self::RESOLVED => 'green',
+            self::NEW => 'primary',
+            self::IN_PROGRESS => 'warning',
+            self::RESOLVED => 'success',
         };
     }
 
