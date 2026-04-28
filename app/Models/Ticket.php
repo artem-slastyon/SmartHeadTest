@@ -70,6 +70,8 @@ class Ticket extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'subject',
+        'text',
         'status'
     ];
 }
