@@ -17,7 +17,7 @@ class TicketCreateRequest extends FormRequest
         return [
             'name' => 'string',
             'email' => 'email',
-            'phone' => 'nullable|regex:/^\+[1-9]\d{1,14}$/',
+            'phone' => 'nullable|regex:' . config('validation.phoneRegex'),
             'subject' => 'string',
             'text' => 'string',
             'attachments.*' => 'file|max:5'
