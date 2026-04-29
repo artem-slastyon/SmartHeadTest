@@ -1,0 +1,57 @@
+$input-border-color: #856d6d;
+$button-background: #6975d5;
+
+html {
+    max-width: 350px;
+    background-color: #272937;
+    color: rgb(205, 205, 205);
+    max-height: 500px;
+    font-family: 'Adamina', serif;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.required {
+    color: red;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 0;
+}
+
+.text-input {
+    color: inherit;
+    font-size: medium;
+    background-color: #4e5168;
+    border: 0 solid $input-border-color;
+    border-bottom: 1px solid $input-border-color;
+    border-radius: 5px;
+}
+
+textarea {
+    color: inherit;
+    resize: none;
+    height: 100px;
+}
+
+input[type="file"]::file-selector-button, button {
+    border: 1px solid gray;
+    background-color: #4955b5;
+
+    &:hover {
+        background-color: $button-background;
+        cursor: pointer
+    }
+}
+
+.hidden {
+    display: none;
+}
