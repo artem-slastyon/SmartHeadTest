@@ -32,5 +32,11 @@ class TicketsController extends Controller
             'subject' => $data['subject'],
             'text' => $data['text'],
         ]);
+
+        if ($request->files->count() > 0) {
+            foreach ($ticket->addAllMediaFromRequest() as $media) {
+                $media->toMediaCollection('attachments');
+            }
+        }
     }
 }
