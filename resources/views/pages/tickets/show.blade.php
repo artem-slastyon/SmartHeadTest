@@ -57,9 +57,16 @@
             <div class="card-footer row justify-content-end gap-2">
                 <form class="form" method="post" id="mark-form" action="{{ route('tickets.mark', ['id' => $ticket->id]) }}">
                     @csrf
-
                 </form>
 
+                <form class="form" method="post" id="delete-form" action="{{ route('tickets.destroy', ['ticket' => $ticket]) }}">
+                    @csrf
+                    @method('DELETE')
+                </form>
+
+                @can('delete tickets')
+                    <button class="btn btn-danger col-3" type="submit" form="delete-form">Delete</button>
+                @endcan
                 <button class="btn btn-success col-3" type="submit" form="mark-form">Mark replied</button>
                 <button class="btn btn-warning col-3" data-bs-toggle="modal" data-bs-target="#statusUpdateModal">Update
                     status

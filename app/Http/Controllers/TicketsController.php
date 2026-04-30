@@ -113,4 +113,11 @@ class TicketsController extends Controller
             ->redirectToRoute('tickets.show', $ticket)
             ->with('status', 'Ticket marked as replied');
     }
+
+    public function destroy(Ticket $ticket)
+    {
+        $ticket->delete();
+
+        return redirect()->route('tickets.index');
+    }
 }
