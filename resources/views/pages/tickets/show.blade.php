@@ -33,7 +33,7 @@
                             </div>
                             <div class="row align-items-center mb-2">
                                 <div class="col-3 text-muted">Status:</div>
-                                <x-status-badge class="col-3 fs-6" :status="$ticket->status"/>
+                                <x-property-badge class="col-3 fs-6" :enum="$ticket->status"/>
                             </div>
                             <div class="row mb-2">
                                 <div class="col-3 text-muted">Response time:</div>

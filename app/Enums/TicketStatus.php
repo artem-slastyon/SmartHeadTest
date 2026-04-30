@@ -2,7 +2,9 @@
 
 namespace App\Enums;
 
-enum TicketStatus: int
+use App\Enums\Interfaces\BadgeRenderableInterface;
+
+enum TicketStatus: int implements BadgeRenderableInterface
 {
     case NEW = 0;
     case IN_PROGRESS = 1;
