@@ -65,6 +65,8 @@ function sendTicket (e) {
 
     const formData = new FormData(form);
 
+    const alert = document.querySelector('.alert');
+
     fetch(
         API_URL,
         {
@@ -75,7 +77,22 @@ function sendTicket (e) {
             body: formData
         }
     ).then(response => {
+        response.json().then(json => {
+            alert.hidden = false;
 
+            if (json.status === 'ok') {
+                alert.classList.contains('alert-danger') && alert.classList.remove('alert-danger');
+
+                alert.classList.add('alert-success');
+                alert.textContent = 'Ticket was sent successfully';
+                return;
+            }
+
+            alert.classList.contains('alert-success') && alert.classList.remove('alert-success');
+
+            alert.classList.add('alert-danger');
+            alert.textContent = json.message ?? 'Error at ticket sending';
+        });
     });
 }
 

@@ -34,9 +34,13 @@ class TicketsController extends Controller
         ]);
 
         if ($request->files->count() > 0) {
-            foreach ($ticket->addAllMediaFromRequest() as $media) {
-                $media->toMediaCollection('attachments');
+            foreach ($request->file('files') as $file) {
+                $ticket->addMedia($file)->toMediaCollection('attachments');
             }
         }
+
+        return response()->json([
+            'status' => 'ok'
+        ]);
     }
 }

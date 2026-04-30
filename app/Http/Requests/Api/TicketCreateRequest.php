@@ -25,7 +25,8 @@ class TicketCreateRequest extends FormRequest
             'phone' => 'nullable|regex:' . config('validation.phoneRegex'),
             'subject' => 'string|required',
             'text' => 'string|required',
-            'attachments.*' => 'file|max:' . config('validation.maxFileCount') . '|size:' . $maxSize,
+            'files' => 'array|max:' . config('validation.maxFileCount'),
+            'files.*' => 'file|' . 'size:' . $maxSize,
         ];
     }
 }
