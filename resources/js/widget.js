@@ -1,71 +1,19 @@
-import { getErrorElement, getErrorMessage, getFieldNameById } from './utils/form-validation.js';
-import { convertFileSizeToBytes } from './utils/datasize.js';
+import WidgetValidator from './utils/widget/widget-validator.js'
+import WidgetAlert from './utils/widget/widget-alert.js'
 
-function validateForm () {
-    let formValid = true;
-
-    const validator = function (inputElement) {
-        const errorElement = getErrorElement(inputElement);
-
-        if (inputElement.checkValidity()) {
-            errorElement.hidden = true;
-        } else {
-            const fieldName = getFieldNameById(inputElement.id);
-            const errorMessage = getErrorMessage(inputElement);
-
-            errorElement.textContent = `${fieldName} ${errorMessage}`;
-            errorElement.hidden = false;
-
-            formValid = false;
-        }
-    }
-
-    document.querySelectorAll('input, textarea').forEach(validator);
-
-    return formValid;
-}
-
-/**
- *
- * @param el
- */
-function validateFiles(el) {
-    const {maxCount, maxSize} = el.dataset;
-    const files = el.files;
-    const errorElement = getErrorElement(el);
-
-    if (files.length > maxCount) {
-        errorElement.hidden = false;
-        errorElement.textContent = 'Maximum count of uploaded files: ' + maxCount;
-        return false;
-    }
-
-    for (const file of files) {
-        if (file.size > convertFileSizeToBytes(maxSize)) {
-            errorElement.hidden = false;
-            errorElement.textContent = 'Maximum allowed size of file: ' + maxSize;
-            return false;
-        }
-    }
-
-    errorElement.hidden = true;
-
-    return true;
-}
+const validator = new WidgetValidator();
 
 function sendTicket (e) {
     e.preventDefault();
 
-    const form = document.querySelector('form');
-    const fileField = document.querySelector('input[type="file"]');
-
-    if (!validateForm() || !validateFiles(fileField)) {
+    if (!validator.validate()) {
         return;
     }
 
+    const form = document.querySelector('form');
     const formData = new FormData(form);
 
-    const alert = document.querySelector('.alert');
+    const alert = new WidgetAlert();
 
     fetch(
         API_URL,
@@ -78,27 +26,18 @@ function sendTicket (e) {
         }
     ).then(response => {
         response.json().then(json => {
-            alert.hidden = false;
-
             if (json.status === 'ok') {
-                alert.classList.contains('alert-danger') && alert.classList.remove('alert-danger');
-
-                alert.classList.add('alert-success');
-                alert.textContent = 'Ticket was sent successfully';
+                alert.success('Ticket was sent successfully');
                 return;
             }
 
-            alert.classList.contains('alert-success') && alert.classList.remove('alert-success');
+            if (json.status === 'ratelimited') {
+                alert.error('You can send only one ticket per day');
+            }
 
-            alert.classList.add('alert-danger');
-            alert.textContent = json.message ?? 'Error at ticket sending';
+            alert.error(json.message ?? 'Error at ticket sending');
         });
     });
 }
 
 document.querySelector('#submit').addEventListener('click', sendTicket);
-document.querySelector('input[type="file"]')
-    .addEventListener(
-        'change',
-        (ev) => validateFiles(ev.currentTarget)
-    );
