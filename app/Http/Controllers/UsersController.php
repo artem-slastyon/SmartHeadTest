@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:delete users')->only('destroy');
+    }
+
     public function index()
     {
         return view(

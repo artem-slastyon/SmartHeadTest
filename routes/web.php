@@ -22,4 +22,5 @@ Route::get('/download/{id}', [MediaDownloadController::class, 'index'])
     ->middleware('can:see tickets')
     ->name('download');
 
-Route::resource('users', UsersController::class);
+Route::resource('users', UsersController::class)
+    ->middleware('can:see users');

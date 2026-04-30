@@ -20,6 +20,9 @@ class TicketsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->middleware('can:edit tickets')->only(['update', 'markReplied']);
+        $this->middleware('can:delete tickets')->only('destroy');
     }
 
     /**
