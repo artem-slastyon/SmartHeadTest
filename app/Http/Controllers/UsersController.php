@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -25,5 +25,20 @@ class UsersController extends Controller
                 'user' => $user,
             ]
         );
+    }
+
+    public function destroy(User $user)
+    {
+        $currentUser = Auth::user();
+
+        if ($user->id === $currentUser->id) {
+            return redirect()->route('users.show', ['user' => $user])
+                ->with('status-color', 'danger')
+                ->with('status', "You can't remove yourself!");
+        }
+
+        $user->delete();
+
+        return redirect()->route('users.index');
     }
 }
