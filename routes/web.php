@@ -9,5 +9,6 @@ Auth::routes();
 Route::redirect('/', '/tickets');
 
 Route::resource('/tickets', TicketsController::class);
+Route::resource('tickets', TicketsController::class);
 
 Route::get('/widget', [WidgetController::class, 'index']);

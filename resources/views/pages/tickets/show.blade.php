@@ -48,7 +48,11 @@
 
             <p class="card-text">{{ $ticket->text }}</p>
 
-            <h4 class="card-title">Attachments:</h4>
+            <h4 class="card-title">Attachments ({{ $attachments->count() }}):</h4>
+
+            @if($attachments->count() > 0)
+                <x-files-table :attachments="$attachments"/>
+            @endif
 
             <div class="card-footer row justify-content-end">
                 <button class="btn btn-warning col-3" data-bs-toggle="modal" data-bs-target="#statusUpdateModal">Update

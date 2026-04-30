@@ -84,7 +84,8 @@ class TicketsController extends Controller
         return view(
             'pages.tickets.show',
             [
-                'ticket' => $ticket
+                'ticket' => $ticket,
+                'attachments' => $ticket->getMedia('attachments'),
             ]
         );
     }
