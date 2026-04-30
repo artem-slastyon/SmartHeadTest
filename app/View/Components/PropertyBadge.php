@@ -2,18 +2,18 @@
 
 namespace App\View\Components;
 
-use App\Enums\TicketStatus;
+use App\Enums\Interfaces\BadgeRenderableInterface;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class StatusBadge extends Component
+class PropertyBadge extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public TicketStatus $status
+        public BadgeRenderableInterface $enum
     ) {
     }
 
@@ -22,6 +22,6 @@ class StatusBadge extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.status-badge');
+        return view('components.property-badge');
     }
 }
