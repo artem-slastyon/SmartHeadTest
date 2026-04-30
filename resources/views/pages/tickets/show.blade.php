@@ -54,7 +54,13 @@
                 <x-files-table :attachments="$attachments"/>
             @endif
 
-            <div class="card-footer row justify-content-end">
+            <div class="card-footer row justify-content-end gap-2">
+                <form class="form" method="post" id="mark-form" action="{{ route('tickets.mark', ['id' => $ticket->id]) }}">
+                    @csrf
+
+                </form>
+
+                <button class="btn btn-success col-3" type="submit" form="mark-form">Mark replied</button>
                 <button class="btn btn-warning col-3" data-bs-toggle="modal" data-bs-target="#statusUpdateModal">Update
                     status
                 </button>
