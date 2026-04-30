@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\TicketsStatisticAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\TicketCreateRequest;
+use App\Mappers\TicketStatisticMapper;
 use App\Models\Customer;
-use App\Models\Ticket;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class TicketsController extends Controller
 {
+    public function __construct(private TicketsStatisticAction $statisticAction)
+    {
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -42,5 +47,12 @@ class TicketsController extends Controller
         return response()->json([
             'status' => 'ok'
         ]);
+    }
+
+    public function statistics(): JsonResponse
+    {
+        $statistic = $this->statisticAction->execute();
+
+        return response()->json(TicketStatisticMapper::fromDto($statistic));
     }
 }
