@@ -8,9 +8,15 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::redirect('/', '/tickets');
-Route::resource('tickets', TicketsController::class);
-Route::post('/tickets/{id}/mark', [TicketsController::class, 'markReplied'])->name('tickets.mark');
+Route::resource('tickets', TicketsController::class)
+    ->middleware('can:see tickets');
+
+Route::post('/tickets/{id}/mark', [TicketsController::class, 'markReplied'])
+    ->middleware('can:edit tickets')
+    ->name('tickets.mark');
 
 Route::get('/widget', [WidgetController::class, 'index']);
 
-Route::get('/download/{id}', [MediaDownloadController::class, 'index'])->name('download');
+Route::get('/download/{id}', [MediaDownloadController::class, 'index'])
+    ->middleware('can:see tickets')
+    ->name('download');
