@@ -22,6 +22,15 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ])->assignRole('admin');
 
+        $roles = ['guest', 'manager', 'admin'];
+
+        User::factory(15)
+            ->create()
+            ->each(function ($user) use ($roles) {
+                $index = fake()->numberBetween(0, 2);
+                $user->assignRole($roles[$index]);
+            });
+
         $this->call([
             CustomerSeeder::class
         ]);
