@@ -8,9 +8,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::redirect('/', '/tickets');
-
-Route::resource('/tickets', TicketsController::class);
 Route::resource('tickets', TicketsController::class);
+Route::post('/tickets/{id}/mark', [TicketsController::class, 'markReplied'])->name('tickets.mark');
 
 Route::get('/widget', [WidgetController::class, 'index']);
 

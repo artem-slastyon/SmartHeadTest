@@ -102,4 +102,15 @@ class TicketsController extends Controller
             ->redirectToRoute('tickets.show', $ticket)
             ->with('status', 'Ticket status successfully updated!');
     }
+
+    public function markReplied(int $ticketId): RedirectResponse
+    {
+        $ticket = Ticket::find($ticketId);
+        $ticket->response_at = new DateTime();
+        $ticket->save();
+
+        return response()
+            ->redirectToRoute('tickets.show', $ticket)
+            ->with('status', 'Ticket marked as replied');
+    }
 }
