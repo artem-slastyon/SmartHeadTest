@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MediaDownloadController;
 use App\Http\Controllers\TicketsController;
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\WidgetController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,5 @@ Route::get('/widget', [WidgetController::class, 'index']);
 Route::get('/download/{id}', [MediaDownloadController::class, 'index'])
     ->middleware('can:see tickets')
     ->name('download');
+
+Route::resource('users', UsersController::class);
