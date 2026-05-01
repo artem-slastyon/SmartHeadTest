@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: SmartHead Tickets API
+  version: 1.0.0
+  description: ''
+servers:
+  - url: 'https://smarthead.tenorium.local'
+paths:
+  /api/tickets:
+    post:
+      summary: Create ticket
+      responses:
+        '200':
+          description: Success
+        '429':
+          description: Ratelimit
+  /api/tickets/statistics:
+    get:
+      summary: Get tickets statistics
+      responses:
+        '200':
+          description: Success
