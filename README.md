@@ -2,6 +2,8 @@
 
 Setup script automatically installs all dependencies and migrates database
 
+Docker development environment located [here](https://github.com/artem-slastyon/SmartHeadDocker)
+
 ### Test data
 
 Seeders adds to database customers, tickets and users to test
