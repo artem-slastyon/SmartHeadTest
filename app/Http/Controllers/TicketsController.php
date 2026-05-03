@@ -77,7 +77,7 @@ class TicketsController extends Controller
                 'status' => $status,
                 'dateFrom' => $data['dateFrom'] ?? '',
                 'dateTo' => $data['dateTo'] ?? '',
-                'tickets' => $ticket->paginate(5),
+                'tickets' => $ticket->paginate(5)->withQueryString(),
             ]
         );
     }
