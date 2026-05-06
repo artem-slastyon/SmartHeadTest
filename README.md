@@ -4,6 +4,14 @@ Setup script automatically installs all dependencies and migrates database
 
 Docker development environment located [here](https://github.com/artem-slastyon/SmartHeadDocker)
 
+### Screenshots
+
+<img width="1905" height="666" alt="tickets" src="https://github.com/user-attachments/assets/d58d4044-7ba8-4b12-b7e7-4e2f95df5845" />
+
+<img width="1905" height="734" alt="ticket" src="https://github.com/user-attachments/assets/904bdde4-5d97-468c-96d8-60faa11d83af" />
+
+<img width="296" height="606" alt="widget" src="https://github.com/user-attachments/assets/47e3cb1a-62ca-4e32-80d2-13ec79dfba1f" />
+
 ### Test data
 
 Seeders adds to database customers, tickets and users to test
