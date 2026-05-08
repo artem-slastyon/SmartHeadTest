@@ -35,4 +35,12 @@ class UserService implements UserServiceInterface
     {
         return User::all();
     }
+
+    /**
+     * @return Collection<User>|User[]
+     */
+    public function list(): Collection|array
+    {
+        return $this->userRepository->list();
+    }
 }
