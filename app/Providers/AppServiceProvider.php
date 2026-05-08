@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Contracts\UserServiceInterface;
+use App\Services\UserService;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\RateLimiter;
@@ -15,7 +18,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(UserServiceInterface::class, function (Application $app) {
+            return new UserService();
+        });
     }
 
     /**
@@ -25,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
 
-        $responseCallback = function (Request $request) {
+        $responseCallback = function () {
             return response()->json([
                 'status' => 'ratelimited'
             ], 429);
