@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands\User;
 
+use App\Console\Commands\AbstractCommand;
 use App\Contracts\UserServiceInterface;
 use Illuminate\Console\Command;
 
-class ListUsersCommand extends Command
+class ListUsersCommand extends AbstractCommand
 {
     protected $signature = 'user:list';
 
