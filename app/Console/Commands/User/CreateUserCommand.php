@@ -2,13 +2,14 @@
 
 namespace App\Console\Commands\User;
 
+use App\Console\Commands\AbstractCommand;
 use App\Contracts\UserServiceInterface;
 use App\DTOs\User\UserRegistrationData;
 use App\Enums\UserRole;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
 
-class CreateUserCommand extends Command
+class CreateUserCommand extends AbstractCommand
 {
     /**
      * The name and signature of the console command.
@@ -43,11 +44,7 @@ class CreateUserCommand extends Command
         ]);
 
         if ($validator->fails()) {
-            $this->info('Validation failed:');
-
-            foreach ($validator->errors()->all() as $error) {
-                $this->error($error);
-            }
+            $this->printValidationError($validator);
 
             return;
         }
