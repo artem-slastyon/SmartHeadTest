@@ -4,8 +4,11 @@ namespace App\Services;
 
 use App\Contracts\UserServiceInterface;
 use App\DTOs\User\UserRegistrationData;
+use App\Enums\UserRole;
+use App\Exceptions\UserException;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Hash;
 
 class UserService implements UserServiceInterface
 {
@@ -37,10 +40,45 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * @return Collection<User>|User[]
+     * @param int $id
+     * @param UserRole $role
+     * @return void
+     * @throws UserException
      */
-    public function list(): Collection|array
+    public function updateRole(int $id, UserRole $role): void
     {
-        return $this->userRepository->list();
+        $user = $this->getUser($id);
+
+        $user->syncRoles($role);
+    }
+
+    /**
+     * @param int $id
+     * @param string $password
+     * @return void
+     * @throws UserException
+     */
+    public function updatePassword(int $id, #[\SensitiveParameter] string $password): void
+    {
+        $user = $this->getUser($id);
+
+        $user->password = Hash::make($password);
+        $user->save();
+    }
+
+    /**
+     * @param int $id
+     * @return User
+     * @throws UserException
+     */
+    private function getUser(int $id): User
+    {
+        $user = User::find($id);
+
+        if (is_null($user)) {
+            throw UserException::userNotFound();
+        }
+
+        return $user;
     }
 }
