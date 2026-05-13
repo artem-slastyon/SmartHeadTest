@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\TicketStatus;
 use App\Http\Requests\TicketsRequest;
+use App\Models\Scopes\TicketsFilter;
 use App\Models\Ticket;
 use DateTime;
 use Illuminate\Contracts\Support\Renderable;
@@ -32,52 +32,24 @@ class TicketsController extends Controller
      */
     public function index(TicketsRequest $request)
     {
-        $data = $request->validated();
-        $status = -1;
+        $email = $request->string('email', '');
+        $phone = $request->string('phone', '');
+        $dateFrom = $request->string('dateFrom', '');
+        $dateTo = $request->string('dateTo', '');
 
-        if (isset($data['status'])) {
-            $status = intval($data['status']);
-        }
+        $status = $request->integer('status', -1);
 
-        $ticket = Ticket::query();
-
-        if (isset($data['email'])) {
-            $ticket->whereCustomerEmailContains($data['email']);
-        }
-
-        if (isset($data['phone'])) {
-            $ticket->whereCustomerPhoneContains($data['phone']);
-        }
-
-        if (isset($data['status']) && $status !== -1) {
-            $ticket->withStatus(TicketStatus::from($status));
-        }
-
-        if (isset($data['dateFrom'])) {
-            try {
-                $ticket->whereWasCreatedAfter(new DateTime($data['dateFrom']));
-            } catch (\DateMalformedStringException $e) {
-                report($e);
-            }
-        }
-
-        if (isset($data['dateTo'])) {
-            try {
-                $ticket->whereWasCreatedBefore(new DateTime($data['dateTo']));
-            } catch (\DateMalformedStringException $e) {
-                report($e);
-            }
-        }
+        $tickets = Ticket::withGlobalScope('tickets_filter', new TicketsFilter($request));
 
         return view(
             'pages.tickets.index',
             [
-                'email' => $data['email'] ?? '',
-                'phone' => $data['phone'] ?? '',
+                'email' => $email,
+                'phone' => $phone,
                 'status' => $status,
-                'dateFrom' => $data['dateFrom'] ?? '',
-                'dateTo' => $data['dateTo'] ?? '',
-                'tickets' => $ticket->paginate(5)->withQueryString(),
+                'dateFrom' => $dateFrom,
+                'dateTo' => $dateTo,
+                'tickets' => $tickets->paginate(5)->withQueryString(),
             ]
         );
     }
