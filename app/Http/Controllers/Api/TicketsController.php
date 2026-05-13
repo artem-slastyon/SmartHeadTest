@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\TicketCreateAction;
 use App\Actions\TicketsStatisticAction;
+use App\DTOs\Ticket\TicketCreationData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\TicketCreateRequest;
 use App\Mappers\TicketStatisticMapper;
-use App\Models\Customer;
 use Illuminate\Http\JsonResponse;
 
 class TicketsController extends Controller
@@ -22,27 +23,18 @@ class TicketsController extends Controller
     {
         $data = $request->validated();
 
-        $customer = Customer::firstOrCreate(
-            [
-                'email' => $data['email'],
-            ],
-            [
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'phone' => $data['phone'] ?? null,
-            ]
+        $action = new TicketCreateAction();
+
+        $action->execute(
+            new TicketCreationData(
+                $data['email'],
+                $data['name'],
+                $data['phone'] ?? null,
+                $data['subject'],
+                $data['text'],
+                $request->file('files', []),
+            ),
         );
-
-        $ticket = $customer->tickets()->create([
-            'subject' => $data['subject'],
-            'text' => $data['text'],
-        ]);
-
-        if ($request->files->count() > 0) {
-            foreach ($request->file('files') as $file) {
-                $ticket->addMedia($file)->toMediaCollection('attachments');
-            }
-        }
 
         return response()->json([
             'status' => 'ok'

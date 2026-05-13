@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Api;
 
-use App\Support\SizeConverter;
 use Exception;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class TicketCreateRequest extends FormRequest
 {
@@ -17,8 +17,6 @@ class TicketCreateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $maxSize = SizeConverter::toKilobytes(config('validation.maxFileSize'));
-
         return [
             'name' => 'string|required',
             'email' => 'email|required',
@@ -26,7 +24,7 @@ class TicketCreateRequest extends FormRequest
             'subject' => 'string|required',
             'text' => 'string|required',
             'files' => 'array|max:' . config('validation.maxFileCount'),
-            'files.*' => 'file|' . 'size:' . $maxSize,
+            'files.*' => File::default()->max(config('validation.maxFileSize'))
         ];
     }
 }
