@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class UsersController extends Controller
 {
@@ -37,12 +37,12 @@ class UsersController extends Controller
 
     public function destroy(User $user)
     {
-        $currentUser = Auth::user();
+        $gateResponse = Gate::inspect('delete', $user);
 
-        if ($user->id === $currentUser->id) {
+        if (!$gateResponse->allowed()) {
             return redirect()->route('users.show', ['user' => $user])
                 ->with('status-color', 'danger')
-                ->with('status', "You can't remove yourself!");
+                ->with('status', $gateResponse->message());
         }
 
         $user->delete();
@@ -52,6 +52,14 @@ class UsersController extends Controller
 
     public function update(User $user, Request $request)
     {
+        $gateResponse = Gate::inspect('update', $user);
+
+        if (!$gateResponse->allowed()) {
+            return redirect()->route('users.show', ['user' => $user])
+                ->with('status-color', 'danger')
+                ->with('status', $gateResponse->message());
+        }
+
         $data = $request->validate([
             'role' => 'string|in:guest,manager,admin'
         ]);
