@@ -12,7 +12,7 @@ Route::redirect('/', '/tickets');
 Route::resource('tickets', TicketsController::class)
     ->middleware('can:see tickets');
 
-Route::post('/tickets/{id}/mark', [TicketsController::class, 'markReplied'])
+Route::post('/tickets/{ticket}/mark', [TicketsController::class, 'markReplied'])
     ->middleware('can:edit tickets')
     ->name('tickets.mark');
 
