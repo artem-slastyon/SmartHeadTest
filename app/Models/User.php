@@ -53,12 +53,10 @@ class User extends Authenticatable
 
     public function getRole(): UserRole
     {
-        if ($this->hasRole('admin')) {
-            return UserRole::ADMIN;
-        }
-
-        if ($this->hasRole('manager')) {
-            return UserRole::MANAGER;
+        foreach (UserRole::cases() as $role) {
+            if ($this->hasRole($role)) {
+                return $role;
+            }
         }
 
         return UserRole::GUEST;
