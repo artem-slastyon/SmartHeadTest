@@ -55,7 +55,7 @@
             @endif
 
             <div class="card-footer row justify-content-end gap-2">
-                <form class="form" method="post" id="mark-form" action="{{ route('tickets.mark', ['id' => $ticket->id]) }}">
+                <form class="form" method="post" id="mark-form" action="{{ route('tickets.mark', ['ticket' => $ticket]) }}">
                     @csrf
                 </form>
 

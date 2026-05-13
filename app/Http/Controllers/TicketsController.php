@@ -78,9 +78,8 @@ class TicketsController extends Controller
             ->with('status', 'Ticket status successfully updated!');
     }
 
-    public function markReplied(int $ticketId): RedirectResponse
+    public function markReplied(Ticket $ticket): RedirectResponse
     {
-        $ticket = Ticket::find($ticketId);
         $ticket->response_at = new DateTime();
         $ticket->save();
 
