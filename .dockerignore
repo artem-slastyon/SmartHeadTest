@@ -1,0 +1,28 @@
+.git
+.gitignore
+node_modules
+vendor
+public/build
+
+# Secrets + local state never go in the image
+.env
+.env.*
+data
+*.sqlite
+
+# bootstrap caches. Laravel regenerates them at runtime.
+bootstrap/cache/*.php
+
+# Ephemeral storage contents (recreated by the entrypoint)
+storage/app/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
+
+# Docker + dev files (note: docker/entrypoint.sh is intentionally NOT listed
+# here — the Dockerfile COPYs it into the image, so it must stay in the context)
+Dockerfile
+docker-compose.yml
+.dockerignore
+README.md
