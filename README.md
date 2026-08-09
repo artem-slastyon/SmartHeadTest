@@ -1,37 +1,112 @@
-### Deploy in docker devenv manual
+# SmartHeadTest
 
-Setup script automatically installs all dependencies and migrates database
+Mini-CRM for collecting and handling tickets from the site through a widget
 
-Docker development environment located [here](https://github.com/artem-slastyon/SmartHeadDocker)
+---
 
-### Screenshots
+## 🛠 Tech Stack
 
-<img width="1905" height="666" alt="tickets" src="https://github.com/user-attachments/assets/d58d4044-7ba8-4b12-b7e7-4e2f95df5845" />
+* **PHP**: 8.4
+* **Framework**: Laravel 12
+* **Database**: MariaDB 12
+* **Environment**: Docker & Docker Compose
 
-<img width="1905" height="734" alt="ticket" src="https://github.com/user-attachments/assets/904bdde4-5d97-468c-96d8-60faa11d83af" />
+---
 
-<img width="296" height="606" alt="widget" src="https://github.com/user-attachments/assets/47e3cb1a-62ca-4e32-80d2-13ec79dfba1f" />
+## 🚀 Quick start
+
+### Requirements
+* Git
+* Docker Engine and Docker Compose
+
+### Deploy instruction
+
+1. **Clone repository:**
+   ```bash
+   git clone https://github.com/artem-slastyon/SmartHeadTest.git
+   cd SmartHeadTest
+   ```
+
+2. **Prepare environment configuration file:**
+   ```bash
+   cp .env.example .env
+   ```
+
+3. **Startup containers:**
+   ```bash
+   docker compose up -d
+   ```
+
+4. **Initialize project:**
+   ```bash
+   docker compose exec app php artisan key:generate
+   docker compose exec app php artisan migrate --seed
+   ```
+
+After completing these steps, the app will be available at: http://127.0.0.1:8080
 
 ### Test data
 
-Seeders adds to database customers, tickets and users to test
+To seed test data - like customers, tickets, and a test user, you can run the following command:
+```bash
+docker compose exec app php artisan db:seed TestDataSeeder
+```
 
 Test admin user has these credentials:
 
-Email: `test@example.com`
-
-Password: `password`
+> Email: `test@example.com`
+> Password: `password`
 
 ### Widget integration
-You can integrate widget by copying this HTML code
+You can integrate the widget by copying this HTML code as an example
 ```html
-<iframe src="https://smarthead.tenorium.local/widget" width="300" height="700"></iframe>
+<iframe src="http://127.0.0.1:8080/widget" width="300" height="700"></iframe>
 ```
 
 ### API
 
-This app has API endpoint to create ticket (used by widget), and to get statistic.
+File docs/openapi.yaml contains the API specification in OpenAPI v3.
 
-Inside file openapi.yaml you can find API specification in format OpenAPI v3.
+Swagger UI instance available at http://127.0.0.1:8081
 
-Also, in docker devenv added Swagger UI instance accessable at http://smarthead.tenorium.local:8080
+## Screenshots
+
+<img width="1905"  alt="tickets" src="./docs/images/ticket-list.png" />
+
+<img width="1905" alt="ticket" src="./docs/images/ticket-view.png" />
+
+<img width="296" alt="widget" src="docs/images/widget.png" />
+
+## 🛠 Development
+
+For active development, this project supports integration with a dev environment wrapper (DEW)
+
+The setup script will fully prepare the local system
+* 🔑 **SSL/TLS-certificates:** Automatic certificate generation via `mkcert`.
+* 🌐 **DNS & Routing:** Automatic domain setup in `/etc/hosts`.
+* 🐳 **Environment:** Deployment of shared services (Apache, MariaDB, Swagger UI, PHP 8.4).
+
+### Requirements:
+
+- docker-compose
+- mkcert (after installation, run `mkcert -install` to install local CA)
+- bash or zsh (optional, for autocomplete to work)
+
+### Quickstart:
+
+1. Clone and start the setup script:
+   ```bash
+   git clone [https://github.com/artem-slastyon/SmartHeadDocker.git](https://github.com/artem-slastyon/SmartHeadDocker.git) ~/workspace/smarthead
+   cd ~/workspace/smarthead
+   ./scripts/main.sh setup
+   ```
+2. After setup, restart your shell and type:
+   ```bash
+   smarthead up
+   ```
+
+
+After startup, the app will be available at https://smarthead.tenorium.local
+Swagger UI will be available at https://smarthead.tenorium.local:8080
+
+To get full DEW command documentation, follow the [DEW repository link](https://github.com/artem-slastyon/SmartHeadDocker).
