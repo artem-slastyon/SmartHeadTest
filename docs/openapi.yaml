@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
-  title: SmartHead Tickets API
+  title: Feedback Tickets API
   version: 1.0.0
   description: ''
 servers:
-  - url: 'https://smarthead.tenorium.local'
+  - url: 'https://feedback.tenorium.local'
 paths:
   /api/tickets:
     post:

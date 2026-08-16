@@ -1,4 +1,4 @@
-# SmartHeadTest
+# Tenorium Feedback
 
 Mini-CRM for collecting and handling tickets from the site through a widget
 
@@ -23,8 +23,8 @@ Mini-CRM for collecting and handling tickets from the site through a widget
 
 1. **Clone repository:**
    ```bash
-   git clone https://github.com/artem-slastyon/SmartHeadTest.git
-   cd SmartHeadTest
+   git clone https://github.com/artem-slastyon/TenoriumFeedback.git
+   cd TenoriumFeedback
    ```
 
 2. **Prepare environment configuration file:**
@@ -96,17 +96,17 @@ The setup script will fully prepare the local system
 
 1. Clone and start the setup script:
    ```bash
-   git clone [https://github.com/artem-slastyon/SmartHeadDocker.git](https://github.com/artem-slastyon/SmartHeadDocker.git) ~/workspace/smarthead
-   cd ~/workspace/smarthead
+   git clone [https://github.com/artem-slastyon/TenoriumFeedbackDocker.git](https://github.com/artem-slastyon/TenoriumFeedbackDocker.git) ~/workspace/feedback
+   cd ~/workspace/feedback
    ./scripts/main.sh setup
    ```
 2. After setup, restart your shell and type:
    ```bash
-   smarthead up
+   feedback up
    ```
 
 
-After startup, the app will be available at https://smarthead.tenorium.local
-Swagger UI will be available at https://smarthead.tenorium.local:8080
+After startup, the app will be available at https://feedback.tenorium.local
+Swagger UI will be available at https://feedback.tenorium.local:8080
 
-To get full DEW command documentation, follow the [DEW repository link](https://github.com/artem-slastyon/SmartHeadDocker).
+To get full DEW command documentation, follow the [DEW repository link](https://github.com/artem-slastyon/TenoriumFeedbackDocker).

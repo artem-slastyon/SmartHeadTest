@@ -1,4 +1,4 @@
-name: smartheadtest
+name: tenorium-feedback
 
 services:
   app:

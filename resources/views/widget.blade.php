@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SmartHead feedback widget</title>
+    <title>Tenorium Feedback widget</title>
 
     @vite(['resources/sass/widget.scss', 'resources/js/widget.js'])
 </head>
